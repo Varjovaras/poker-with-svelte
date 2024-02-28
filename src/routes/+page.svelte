@@ -3,9 +3,15 @@
 	let deck = new Deck().deck;
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<div class="flex flex-col items-center justify-center min-h-screen">
+	<h1 class="h1">Welcome to <span class="">Poker Simulator</span></h1>
 
-{#each deck as card}
-	<p>{card.suit} . {card.rank}</p>
-{/each}
+	<div class="grid grid-cols-4 items-center mt-4">
+		{#each deck as card}
+			<div class="flex justify-between mx-2">
+				<p>{card.suit}</p>
+				<p>{card.rank}</p>
+			</div>
+		{/each}
+	</div>
+</div>
