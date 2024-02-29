@@ -1,7 +1,9 @@
-export type Card = { suit: string; rank: number };
-export type Deck = Card[];
-const suits = ['hearts', 'diamonds', 'spades', 'clubs'] as const;
-const ranks = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+export type CardType = { suit: SuitType; rank: RankType };
+export type Deck = CardType[];
+export const suits = ['hearts', 'diamonds', 'spades', 'clubs'] as const;
+export const ranks = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const;
+export type SuitType = (typeof suits)[number];
+export type RankType = (typeof ranks)[number];
 
 export const newDeck = (): Deck => {
 	let deck: Deck = [];
@@ -22,11 +24,9 @@ export const newDeck = (): Deck => {
 };
 
 export const shuffleDeck = (deck: Deck): Deck => {
-	const newDeck = deck;
-	let i = newDeck.length;
-	while (--i > 0) {
-		const temp = Math.floor(Math.random() * (i + 1));
-		[newDeck[temp], newDeck[i]] = [newDeck[i], newDeck[temp]];
+	for (let i = deck.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[deck[i], deck[j]] = [deck[j], deck[i]];
 	}
-	return newDeck;
+	return deck;
 };
