@@ -1,34 +1,32 @@
 export type Card = { suit: string; rank: number };
+export type Deck = Card[];
+const suits = ['hearts', 'diamonds', 'spades', 'clubs'] as const;
+const ranks = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
-export class Deck {
-	static readonly suits = ['hearts', 'diamonds', 'spades', 'clubs'];
-	static readonly ranks = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-	deck: Card[] = [];
-
-	constructor() {
-		for (let i = 0; i < 4; i++) {
-			for (let j = 0; j < 13; j++) {
-				const card = {
-					suit: Deck.suits[i],
-					rank: Deck.ranks[j]
-				};
-				this.deck.push(card);
-			}
+export const newDeck = (): Deck => {
+	let deck: Deck = [];
+	for (let i = 0; i < 4; i++) {
+		for (let j = 0; j < 13; j++) {
+			const card = {
+				suit: suits[i],
+				rank: ranks[j]
+			};
+			deck.push(card);
 		}
-		if (this.deck.length !== 52) {
-			throw new Error('deck is not 52 cards');
-		}
-		this.shuffle();
+	}
+	if (deck.length !== 52) {
+		throw new Error('deck is not 52 cards');
 	}
 
-	//fisher-yates shuffle algorithm
-	shuffle() {
-		const array = this.deck;
-		let i = array.length;
-		while (--i > 0) {
-			const temp = Math.floor(Math.random() * (i + 1));
-			[array[temp], array[i]] = [array[i], array[temp]];
-		}
-		this.deck = array;
+	return deck;
+};
+
+export const shuffleDeck = (deck: Deck): Deck => {
+	const newDeck = deck;
+	let i = newDeck.length;
+	while (--i > 0) {
+		const temp = Math.floor(Math.random() * (i + 1));
+		[newDeck[temp], newDeck[i]] = [newDeck[i], newDeck[temp]];
 	}
-}
+	return newDeck;
+};

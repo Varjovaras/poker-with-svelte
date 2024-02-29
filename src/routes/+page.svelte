@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { Deck } from '$lib/deck';
-	let deck = new Deck().deck;
+	import { newDeck } from '$lib/deck';
+	import Card from '$lib/Card.svelte';
+
+	const deck = newDeck();
 </script>
 
 <div class="flex flex-col items-center justify-center min-h-screen">
@@ -9,8 +11,7 @@
 	<div class="grid grid-cols-4 items-center mt-4">
 		{#each deck as card}
 			<div class="flex justify-between mx-2">
-				<p>{card.suit}</p>
-				<p>{card.rank}</p>
+				<Card {card} />
 			</div>
 		{/each}
 	</div>
