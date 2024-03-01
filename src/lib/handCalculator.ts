@@ -27,6 +27,7 @@ export const handCalculator = (hand: Card[]): HandValue => {
 //this gets copied for isStraight() function
 const straightHelper = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
+//ace which is always rank of 0 is also added to the 14th element of the array
 const isStraight = (hand: Card[]): boolean => {
 	const handRanksAsArray = [...straightHelper];
 	for (let i = 0; i < hand.length; i++) {
@@ -34,10 +35,25 @@ const isStraight = (hand: Card[]): boolean => {
 			handRanksAsArray[0]++;
 			handRanksAsArray[13]++;
 		} else {
-			handRanksAsArray[hand[i].rank];
+			handRanksAsArray[hand[i].rank]++;
 		}
 	}
-	return true;
+
+	let counter = 0;
+
+	//array ends at 10 because if handRanksAsArray[9] is not part of the straight
+	//it cannot be straight
+	for (let i = 0; i < 10; i++) {
+		if (handRanksAsArray[i] !== 0) {
+			counter++;
+			if (counter === 5) {
+				return true;
+			}
+		} else {
+			counter = 0;
+		}
+	}
+	return false;
 };
 
 const isFlush = (hand: Card[]): boolean => {
@@ -45,7 +61,7 @@ const isFlush = (hand: Card[]): boolean => {
 };
 
 //this is only called when your hand has flush and straight at the same time.
-//this checks if it's a royal flush, straight flush or only a flush'
+//this checks if it's a royal flush, straight flush or only a flush
 const isRoyalFlush = (hand: Card[]): FlushAndStraightHandTypes => {
 	return 'RoyalFlush';
 };
