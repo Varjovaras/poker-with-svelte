@@ -18,6 +18,7 @@ type FlushAndStraightHandTypes = 'RoyalFlush' | 'StraightFlush' | 'Flush';
 //there are 14 elements because Ace can be a 1 or 14 depending on the straight
 const handRanksArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 type HandRankArray = typeof handRanksArray;
+type SuitCounts = Record<string, number>;
 
 export const handCalculator = (hand: Card[]): HandValue => {
 	if (hand.length < 5) {
@@ -27,7 +28,7 @@ export const handCalculator = (hand: Card[]): HandValue => {
 	const handSuitsAsNumbers = handSuitHelper(hand);
 
 	if (isFlush(handSuitsAsNumbers) && isStraight(handRanksAsNumbers)) {
-		return isRoyalFlush(hand);
+		return straightFlushHelper(hand);
 	}
 
 	if (isFourOfKind(handRanksAsNumbers)) {
@@ -79,7 +80,7 @@ const isStraight = (handRanksAsNumbers: HandRankArray): boolean => {
 	return false;
 };
 
-const isFlush = (suitCounts: Record<string, number>): boolean => {
+const isFlush = (suitCounts: SuitCounts): boolean => {
 	for (const count of Object.values(suitCounts)) {
 		if (count >= 5) {
 			return true;
@@ -88,10 +89,37 @@ const isFlush = (suitCounts: Record<string, number>): boolean => {
 	return false;
 };
 
-//this is only called when your hand has flush and straight at the same time.
-//this checks if it's a royal flush, straight flush or only a flush
 const isRoyalFlush = (hand: Card[]): FlushAndStraightHandTypes => {
 	return 'RoyalFlush';
+};
+
+//this is only called when your hand has flush and straight at the same time.
+//this checks if it's a royal flush, straight flush or only a flush
+const straightFlushHelper = (
+	hand: Card[],
+	handRanksAsNumbers: HandRankArray,
+	handSuitsAsNumbers: SuitCounts
+): FlushAndStraightHandTypes => {
+	if (!flushIsStraight) {
+		return 'Flush';
+	}
+
+	const sortedHand = sortCardsByRank(hand);
+	const index = straightStartingIndex(handRanksAsNumbers);
+	const flushSuit = suitWithFiveOrMore(handSuitsAsNumbers);
+};
+
+const flushIsStraight = (
+	sortedHand: Card[],
+	straightStartingIndex: number,
+	flushSuit: string
+): boolean => {
+	for (let i = straightStartingIndex; i < straightStartingIndex + 5; i++) {
+		if (sortedHand.some((card) => !(card.suit === flushSuit && card.rank === i))) {
+			throw new Error();
+		}
+	}
+	return true;
 };
 
 const handRankHelper = (hand: Card[]): number[] => {
@@ -132,11 +160,11 @@ const isFullHouse = (handRanksAsNumbers: HandRankArray): boolean => {
 	return isThreeOfKind(handRanksAsNumbers) && isThreeOfKind(handRanksAsNumbers);
 };
 
-function isThreeOfKind(handRanksAsNumbers: number[]) {
+function isThreeOfKind(handRanksAsNumbers: number[]): boolean {
 	return handRanksAsNumbers.some((count) => count === 3);
 }
 
-function isTwoPair(handRanksAsNumbers: number[]) {
+const isTwoPair = (handRanksAsNumbers: number[]): boolean => {
 	let firstPair = false;
 
 	for (const rank of handRanksAsNumbers) {
@@ -148,8 +176,45 @@ function isTwoPair(handRanksAsNumbers: number[]) {
 		}
 	}
 	return false;
-}
+};
 
-function isPair(handRanksAsNumbers: number[]) {
+function isPair(handRanksAsNumbers: number[]): boolean {
 	return handRanksAsNumbers.some((count) => count === 2);
 }
+
+//this shouldnt be called if the hand is not a straight
+//only called when hand is both straight and flush
+const straightStartingIndex = (handRanksAsNumbers: HandRankArray): number => {
+	//counter used to track how many elements hand has in row
+	let counter = 0;
+	//array ends at 10 because if handRanksAsArray[9] is not part of the straight
+	//it cannot be straight
+	for (let i = 0; i < 10; i++) {
+		if (handRanksAsNumbers[i] !== 0) {
+			counter++;
+			if (counter === 5) {
+				return i - 4;
+			}
+		} else {
+			counter = 0;
+		}
+	}
+	throw new Error('Hand is not a straight');
+};
+
+//creates new array
+const sortCardsByRank = (hand: Card[]): Card[] => {
+	return [...hand].sort((a, b) => a.rank - b.rank);
+};
+
+//only called when checking for straight flush
+const suitWithFiveOrMore = (handSuitsAsNumbers: SuitCounts): string => {
+	for (const suit in handSuitsAsNumbers) {
+		if (handSuitsAsNumbers[suit] >= 5) {
+			return suit;
+		}
+	}
+	throw new Error(
+		"This shouldn't be called because hand should always be flush, when checking for straight flush"
+	);
+};
