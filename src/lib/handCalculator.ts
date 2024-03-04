@@ -28,7 +28,7 @@ export const handCalculator = (hand: Card[]): HandValue => {
 	const handSuitsAsNumbers = handSuitHelper(hand);
 
 	if (isFlush(handSuitsAsNumbers) && isStraight(handRanksAsNumbers)) {
-		return straightFlushHelper(hand, handRanksAsNumbers, handSuitsAsNumbers);
+		return straightFlushHelper(hand, handSuitsAsNumbers);
 	}
 
 	if (isFourOfKind(handRanksAsNumbers)) {
@@ -52,12 +52,10 @@ export const handCalculator = (hand: Card[]): HandValue => {
 	}
 
 	if (isTwoPair(handRanksAsNumbers)) {
-		console.log('?!?!??!?');
 		return 'TwoPair';
 	}
 
 	if (isPair(handRanksAsNumbers)) {
-		console.log('ali');
 		return 'Pair';
 	}
 
@@ -95,13 +93,13 @@ const isFlush = (suitCounts: SuitCounts): boolean => {
 //this checks if it's a royal flush, straight flush or only a flush
 const straightFlushHelper = (
 	hand: Card[],
-	handRanksAsNumbers: HandRankArray,
 	handSuitsAsNumbers: SuitCounts
 ): FlushAndStraightHandTypes => {
 	const sortedHand = sortCardsByRank(hand);
 	const flushSuit = suitWithFiveOrMore(handSuitsAsNumbers);
 
-	// Check for straight flush with any
+	// Check for straight flush starting from any possible index
+	//straight might start from a different index than the containing straight flush so check all to make sure
 	for (let i = 0; i < 10; i++) {
 		if (flushIsStraight(sortedHand, i, flushSuit)) {
 			if (i === 9) {
@@ -119,17 +117,18 @@ const flushIsStraight = (
 	straightStartingIndex: number,
 	flushSuit: string
 ): boolean => {
-	for (let i = straightStartingIndex; i < straightStartingIndex + 5; i++) {
-		if (i === 13) {
-			if (!sortedHand.some((card) => card.suit === flushSuit && card.rank === 0)) {
-				return false;
-			}
-		} else if (!sortedHand.some((card) => card.suit === flushSuit && card.rank === i)) {
+	const straightFlushCards = sortedHand.filter((card) => card.suit === flushSuit);
+
+	for (let i = 0; i < 5; i++) {
+		const expectedRank = (straightStartingIndex + i) % 13;
+		if (!straightFlushCards.some((card) => card.rank === expectedRank)) {
 			return false;
 		}
 	}
+
 	return true;
 };
+
 const handRankHelper = (hand: Card[]): number[] => {
 	const handRanksAsNumbers = [...handRanksArray];
 
