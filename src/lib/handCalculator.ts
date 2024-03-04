@@ -26,10 +26,6 @@ export const handCalculator = (hand: Card[]): HandValue => {
 	}
 	const handRanksAsNumbers = handRankHelper(hand);
 	const handSuitsAsNumbers = handSuitHelper(hand);
-	console.log(isFlush(handSuitsAsNumbers));
-	console.log(isStraight(handRanksAsNumbers));
-	console.log(handRanksAsNumbers);
-	console.log(straightStartingIndex(handRanksAsNumbers));
 
 	if (isFlush(handSuitsAsNumbers) && isStraight(handRanksAsNumbers)) {
 		return straightFlushHelper(hand, handRanksAsNumbers, handSuitsAsNumbers);
@@ -56,10 +52,12 @@ export const handCalculator = (hand: Card[]): HandValue => {
 	}
 
 	if (isTwoPair(handRanksAsNumbers)) {
+		console.log('?!?!??!?');
 		return 'TwoPair';
 	}
 
 	if (isPair(handRanksAsNumbers)) {
+		console.log('ali');
 		return 'Pair';
 	}
 
@@ -101,18 +99,19 @@ const straightFlushHelper = (
 	handSuitsAsNumbers: SuitCounts
 ): FlushAndStraightHandTypes => {
 	const sortedHand = sortCardsByRank(hand);
-	const index = straightStartingIndex(handRanksAsNumbers);
 	const flushSuit = suitWithFiveOrMore(handSuitsAsNumbers);
-	const flushStraight = flushIsStraight(sortedHand, index, flushSuit);
-	console.log(sortedHand);
-	console.log(index);
-	if (!flushStraight) {
-		return 'Flush';
+
+	// Check for straight flush with any
+	for (let i = 0; i < 10; i++) {
+		if (flushIsStraight(sortedHand, i, flushSuit)) {
+			if (i === 9) {
+				return 'RoyalFlush';
+			}
+			return 'StraightFlush';
+		}
 	}
-	if (flushStraight && index === 9) {
-		return 'RoyalFlush';
-	}
-	return 'StraightFlush';
+
+	return 'Flush';
 };
 
 const flushIsStraight = (
@@ -174,17 +173,15 @@ function isThreeOfKind(handRanksAsNumbers: number[]): boolean {
 }
 
 const isTwoPair = (handRanksAsNumbers: number[]): boolean => {
-	let firstPair = false;
+	let pairCount = 0;
 
 	for (const rank of handRanksAsNumbers) {
-		if (rank === 2 && !firstPair) {
-			firstPair = true;
-		}
-		if (rank === 2 && firstPair) {
-			return true;
+		if (rank === 2) {
+			pairCount++;
 		}
 	}
-	return false;
+
+	return pairCount >= 2;
 };
 
 function isPair(handRanksAsNumbers: number[]): boolean {
