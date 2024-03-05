@@ -8,7 +8,7 @@
 	type SingleSuitCharacter = (typeof cardSuitCharacters)[number];
 
 	export let card: Card;
-    
+
 	const cardSuitConverter = (suit: SuitType): SingleSuitCharacter => {
 		switch (suit) {
 			case 'hearts':

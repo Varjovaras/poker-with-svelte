@@ -1,5 +1,12 @@
+import { newDeck } from '$lib/deck';
 import type { PageLoad } from './$types';
 
-export const load = (async () => {
-	return {};
-}) satisfies PageLoad;
+export const load: PageLoad = () => {
+	const deck = newDeck();
+
+	return {
+		post: {
+			deck
+		}
+	};
+};
