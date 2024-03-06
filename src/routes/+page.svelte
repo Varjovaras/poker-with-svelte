@@ -49,6 +49,9 @@
 					<Card {card} />
 				{/each}
 			</div>
+			<p>
+				{handCalculator(cardsOnBoard.concat(player.cards))}
+			</p>
 		{/each}
 	</div>
 
