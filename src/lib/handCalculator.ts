@@ -1,19 +1,19 @@
 import type { Card } from './deck';
 
 const HandTypes = [
-	'royal flush',
-	'straight flush',
-	'four of kind',
-	'fullHouse',
-	'flush',
-	'straight',
-	'three of kind',
-	'two pair',
-	'pair',
-	'high card'
+	'RoyalFlush',
+	'StraightFlush',
+	'FourOfKind',
+	'FullHouse',
+	'Flush',
+	'Straight',
+	'ThreeOfKind',
+	'TwoPair',
+	'Pair',
+	'HighCard'
 ] as const;
 type HandValue = (typeof HandTypes)[number];
-type FlushAndStraightHandTypes = 'royal flush' | 'straight flush' | 'flush';
+type FlushAndStraightHandTypes = 'RoyalFlush' | 'StraightFlush' | 'Flush';
 
 //there are 14 elements because Ace can be a 1 or 14 depending on the straight
 const handRanksArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -32,34 +32,34 @@ export const handCalculator = (hand: Card[]): HandValue => {
 	}
 
 	if (isFourOfKind(handRanksAsNumbers)) {
-		return 'four of kind';
+		return 'FourOfKind';
 	}
 
 	if (isFullHouse(handRanksAsNumbers)) {
-		return 'fullHouse';
+		return 'FullHouse';
 	}
 
 	if (isFlush(handSuitsAsNumbers)) {
-		return 'flush';
+		return 'Flush';
 	}
 
 	if (isStraight(handRanksAsNumbers)) {
-		return 'straight';
+		return 'Straight';
 	}
 
 	if (isThreeOfKind(handRanksAsNumbers)) {
-		return 'three of kind';
+		return 'ThreeOfKind';
 	}
 
 	if (isTwoPair(handRanksAsNumbers)) {
-		return 'two pair';
+		return 'TwoPair';
 	}
 
 	if (isPair(handRanksAsNumbers)) {
-		return 'pair';
+		return 'Pair';
 	}
 
-	return 'high card';
+	return 'HighCard';
 };
 
 const isStraight = (handRanksAsNumbers: HandRankArray): boolean => {
@@ -103,13 +103,13 @@ const straightFlushHelper = (
 	for (let i = 0; i < 10; i++) {
 		if (flushIsStraight(sortedHand, i, flushSuit)) {
 			if (i === 9) {
-				return 'royal flush';
+				return 'RoyalFlush';
 			}
-			return 'straight flush';
+			return 'StraightFlush';
 		}
 	}
 
-	return 'flush';
+	return 'Flush';
 };
 
 const flushIsStraight = (
@@ -186,6 +186,24 @@ const isTwoPair = (handRanksAsNumbers: number[]): boolean => {
 function isPair(handRanksAsNumbers: number[]): boolean {
 	return handRanksAsNumbers.some((count) => count === 2);
 }
+
+//this shouldnt be called if the hand is not a straight
+//only called when hand is both straight and flush
+const straightStartingIndex = (handRanksAsNumbers: HandRankArray): number => {
+	//counter used to track how many elements hand has in row
+	let counter = 0;
+	for (let i = 0; i < 14; i++) {
+		if (handRanksAsNumbers[i] !== 0) {
+			counter++;
+			if (counter === 5) {
+				return i - 4;
+			}
+		} else {
+			counter = 0;
+		}
+	}
+	throw new Error('Hand is not a straight');
+};
 
 //creates new array
 const sortCardsByRank = (hand: Card[]): Card[] => {
