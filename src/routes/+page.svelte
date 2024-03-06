@@ -49,9 +49,11 @@
 					<Card {card} />
 				{/each}
 			</div>
-			<p>
-				{handCalculator(cardsOnBoard.concat(player.cards))}
-			</p>
+			{#if cardsOnBoard.length >= 5}
+				<p>
+					{handCalculator(cardsOnBoard.concat(player.cards))}
+				</p>
+			{/if}
 		{/each}
 	</div>
 

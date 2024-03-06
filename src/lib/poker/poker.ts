@@ -46,3 +46,13 @@ export const deal = (poker: Poker) => {
 		}
 	}
 };
+
+// const royalFlushCalculator = () => {
+// 	for (; i < 100000000; i++) {
+// 		if (handCalculator(deck.slice(0, 7)) === 'royal flush') {
+// 			break;
+// 		} else {
+// 			deck = newDeck();
+// 		}
+// 	}
+// };
