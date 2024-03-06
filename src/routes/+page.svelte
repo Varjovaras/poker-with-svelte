@@ -1,9 +1,16 @@
 <script lang="ts">
-	// import { newDeck, shuffleDeck } from '$lib/deck';
 	import type { PageData } from './$types';
 	import Card from '$lib/Card.svelte';
+	import { handCalculator } from '$lib/handCalculator';
+	import { newDeck } from '$lib/deck';
+
 	export let data: PageData;
-	const deck = data.post.deck;
+	let deck = data.post.deck;
+	$: hand = handCalculator(deck.slice(0, 7));
+
+	const shuffle = () => {
+		deck = newDeck();
+	};
 </script>
 
 <div class="flex min-h-screen flex-col items-center justify-center">
@@ -16,4 +23,8 @@
 			</div>
 		{/each}
 	</div>
+	<p class="text-red-400">
+		{hand}
+	</p>
+	<button on:click={shuffle}>shuffle</button>
 </div>

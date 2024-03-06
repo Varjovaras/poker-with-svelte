@@ -16,7 +16,7 @@ const straightFlushHand: Deck = [
 ];
 
 test('Hand is straight flush, not a royal flush and not just a flush', () => {
-	expect(handCalculator(straightFlushHand)).toBe('StraightFlush');
+	expect(handCalculator(straightFlushHand)).toBe('straight flush');
 });
 
 const royalFlushHand: Deck = [
@@ -31,7 +31,7 @@ const royalFlushHand: Deck = [
 ];
 
 test('Hand is royal flush', () => {
-	expect(handCalculator(royalFlushHand)).toBe('RoyalFlush');
+	expect(handCalculator(royalFlushHand)).toBe('royal flush');
 });
 
 //straight from 10 to A, hand has a flush but the straight isnt the flush
@@ -45,7 +45,7 @@ const flushHandWithStraight: Deck = [
 ];
 
 test('Hand is only a flush while containing straight', () => {
-	expect(handCalculator(flushHandWithStraight)).toBe('Flush');
+	expect(handCalculator(flushHandWithStraight)).toBe('flush');
 });
 
 const threeOfKindHand: Deck = [
@@ -58,7 +58,7 @@ const threeOfKindHand: Deck = [
 ];
 
 test('Hand is three of a kind', () => {
-	expect(handCalculator(threeOfKindHand)).toBe('ThreeOfKind');
+	expect(handCalculator(threeOfKindHand)).toBe('three of kind');
 });
 
 const twoPairHand: Deck = [
@@ -71,7 +71,7 @@ const twoPairHand: Deck = [
 ];
 
 test('Hand is two pair', () => {
-	expect(handCalculator(twoPairHand)).toBe('TwoPair');
+	expect(handCalculator(twoPairHand)).toBe('two pair');
 });
 
 const pairHand: Deck = [
@@ -83,7 +83,7 @@ const pairHand: Deck = [
 ];
 
 test('Hand is pair', () => {
-	expect(handCalculator(pairHand)).toBe('Pair');
+	expect(handCalculator(pairHand)).toBe('pair');
 });
 
 const highCardHand: Deck = [
@@ -96,5 +96,5 @@ const highCardHand: Deck = [
 ];
 
 test('Hand is high card', () => {
-	expect(handCalculator(highCardHand)).toBe('HighCard');
+	expect(handCalculator(highCardHand)).toBe('high card');
 });
