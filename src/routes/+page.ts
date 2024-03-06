@@ -1,12 +1,14 @@
-import { newDeck } from '$lib/poker/deck';
+import { deal, newPoker } from '$lib/poker/poker';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = () => {
-	const deck = newDeck();
+	const poker = newPoker();
+	deal(poker);
+	// const deck = newDeck();
 
 	return {
 		post: {
-			deck
+			poker
 		}
 	};
 };

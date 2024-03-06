@@ -4,30 +4,31 @@
 	import { handCalculator } from '$lib/poker/handCalculator';
 
 	import { newDeck } from '$lib/poker/deck';
+	import { deal } from '$lib/poker/poker';
 
 	export let data: PageData;
-	let deck = data.post.deck;
+	let poker = data.post.poker;
 
-	$: cardsOnBoard = deck.slice(0, 5);
-	$: handValue = handCalculator(cardsOnBoard);
-
-	let i = 0;
+	$: cardsOnBoard = poker.deck.slice(0, 5);
 
 	const shuffle = () => {
-		deck = newDeck();
-		i = 0;
-		royalFlushCalculator();
+		poker.deck = newDeck();
+		for (const player of poker.players) {
+			player.cards = [];
+		}
+		deal(poker);
+		// royalFlushCalculator();
 	};
 
-	const royalFlushCalculator = () => {
-		for (; i < 100000000; i++) {
-			if (handCalculator(deck.slice(0, 7)) === 'royal flush') {
-				break;
-			} else {
-				deck = newDeck();
-			}
-		}
-	};
+	// const royalFlushCalculator = () => {
+	// 	for (; i < 100000000; i++) {
+	// 		if (handCalculator(deck.slice(0, 7)) === 'royal flush') {
+	// 			break;
+	// 		} else {
+	// 			deck = newDeck();
+	// 		}
+	// 	}
+	// };
 </script>
 
 <div class="flex min-h-screen flex-col items-center justify-center">
@@ -41,12 +42,21 @@
 		{/each}
 	</div>
 
-	<div class="grid">
+	<div class="mx-6 grid grid-cols-2">
+		{#each poker.players as player (player.id)}
+			<div class="mx-4 my-0.5 flex justify-between">
+				{#each player.cards as card}
+					<Card {card} />
+				{/each}
+			</div>
+		{/each}
+	</div>
+
+	<!-- <div class="grid">
 		<p class="text-red-500">
 			{handValue}
 		</p>
-	</div>
+	</div> -->
 
-	<button on:click={shuffle}>shuffle</button>
-	<p>{i}</p>
+	<button type="button" class="variant-ghost-primary btn mt-4" on:click={shuffle}>shuffle</button>
 </div>
