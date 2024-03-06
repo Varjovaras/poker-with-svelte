@@ -6,7 +6,7 @@ export type Card = { suit: SuitType; rank: RankType };
 export type Deck = Card[];
 
 export const newDeck = (): Deck => {
-	let deck: Deck = [];
+	const deck: Deck = [];
 	for (let i = 0; i < 4; i++) {
 		for (let j = 0; j < 13; j++) {
 			const card = {
@@ -20,8 +20,7 @@ export const newDeck = (): Deck => {
 		throw new Error('deck is not 52 cards');
 	}
 
-	deck = shuffleDeck(deck);
-	return deck;
+	return shuffleDeck(deck);
 };
 
 const shuffleDeck = (deck: Deck): Deck => {

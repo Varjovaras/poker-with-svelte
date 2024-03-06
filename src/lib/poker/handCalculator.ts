@@ -12,7 +12,7 @@ const HandTypes = [
 	'pair',
 	'high card'
 ] as const;
-type HandValue = (typeof HandTypes)[number];
+export type HandValue = (typeof HandTypes)[number];
 type FlushAndStraightHandTypes = 'royal flush' | 'straight flush' | 'flush';
 
 //there are 14 elements because Ace can be a 1 or 14 depending on the straight
