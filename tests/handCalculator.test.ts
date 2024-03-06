@@ -98,3 +98,29 @@ const highCardHand: Deck = [
 test('Hand is high card', () => {
 	expect(handCalculator(highCardHand)).toBe('high card');
 });
+
+const straightHand: Deck = [
+	{ suit: 'hearts', rank: 2 },
+	{ suit: 'diamonds', rank: 3 },
+	{ suit: 'clubs', rank: 4 },
+	{ suit: 'spades', rank: 5 },
+	{ suit: 'hearts', rank: 6 },
+	{ suit: 'spades', rank: 0 }
+];
+
+test('Hand is straight', () => {
+	expect(handCalculator(straightHand)).toBe('straight');
+});
+
+const fullHouseHand: Deck = [
+	{ suit: 'hearts', rank: 2 },
+	{ suit: 'diamonds', rank: 2 },
+	{ suit: 'clubs', rank: 4 },
+	{ suit: 'spades', rank: 4 },
+	{ suit: 'hearts', rank: 4 },
+	{ suit: 'spades', rank: 0 }
+];
+
+test('Hand is full house', () => {
+	expect(handCalculator(fullHouseHand)).toBe('full house');
+});

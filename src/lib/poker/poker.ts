@@ -22,13 +22,10 @@ export const newPlayer = (id: number): Player => {
 };
 
 export const newPoker = (): Poker => {
-	const player = newPlayer(0);
-	const player2 = newPlayer(1);
-	// const player3 = newPlayer(2);
-	// const player4 = newPlayer(3);
+	const players = [newPlayer(0), newPlayer(1), newPlayer(2), newPlayer(3)];
 
 	return {
-		players: [player, player2],
+		players,
 		deck: newDeck()
 	};
 };

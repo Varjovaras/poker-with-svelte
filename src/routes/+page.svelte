@@ -19,16 +19,6 @@
 		deal(poker);
 		// royalFlushCalculator();
 	};
-
-	// const royalFlushCalculator = () => {
-	// 	for (; i < 100000000; i++) {
-	// 		if (handCalculator(deck.slice(0, 7)) === 'royal flush') {
-	// 			break;
-	// 		} else {
-	// 			deck = newDeck();
-	// 		}
-	// 	}
-	// };
 </script>
 
 <div class="flex min-h-screen flex-col items-center justify-center">

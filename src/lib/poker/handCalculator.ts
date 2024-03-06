@@ -1,10 +1,10 @@
-import type { Card } from './deck';
+import { newDeck, type Card, type Deck } from './deck';
 
 const HandTypes = [
 	'royal flush',
 	'straight flush',
 	'four of kind',
-	'fullHouse',
+	'full house',
 	'flush',
 	'straight',
 	'three of kind',
@@ -36,7 +36,7 @@ export const handCalculator = (hand: Card[]): HandValue => {
 	}
 
 	if (isFullHouse(handRanksAsNumbers)) {
-		return 'fullHouse';
+		return 'full house';
 	}
 
 	if (isFlush(handSuitsAsNumbers)) {
@@ -164,7 +164,7 @@ const isFourOfKind = (handRanksAsNumbers: HandRankArray): boolean => {
 };
 
 const isFullHouse = (handRanksAsNumbers: HandRankArray): boolean => {
-	return isThreeOfKind(handRanksAsNumbers) && isTwoPair(handRanksAsNumbers);
+	return isThreeOfKind(handRanksAsNumbers) && isPair(handRanksAsNumbers);
 };
 
 function isThreeOfKind(handRanksAsNumbers: number[]): boolean {
