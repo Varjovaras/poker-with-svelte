@@ -34,4 +34,4 @@
 {:else}
 	<span class="text-gray-400">{cardSuitConverter(card.suit)}</span>
 {/if}
-<p class="mr-0.5">{cardRankConverter(card.rank)}</p>
+<p class=" mr-0.5">{cardRankConverter(card.rank)}</p>

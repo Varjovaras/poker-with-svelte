@@ -1,5 +1,5 @@
-import type { Deck } from '$lib/deck';
-import { handCalculator } from '$lib/handCalculator';
+import type { Deck } from '$lib/poker/deck';
+import { handCalculator } from '$lib/poker/handCalculator';
 import { expect, test } from 'vitest';
 
 export function sum(a: number, b: number) {
