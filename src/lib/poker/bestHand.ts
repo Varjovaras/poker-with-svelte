@@ -1,7 +1,11 @@
 import type { HandValue } from './handCalculator';
 
-const handCompare = (hands: HandValue[]): HandValue[] => {
+const bestHand = (hands: HandValue[]): HandValue[] => {
 	const maxHandValue = Math.max(...hands.map(handValueToInt));
+	const filteredHands = hands.filter((hand) => handValueToInt(hand) === maxHandValue);
+	if (filteredHands.length === 0) {
+		return filteredHands;
+	}
 	return hands.filter((hand) => handValueToInt(hand) === maxHandValue);
 };
 
