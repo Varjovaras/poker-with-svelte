@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { Card } from '$lib/poker/card';
 	import { handCalculator } from '$lib/poker/handCalculator';
 	import { type Player } from '$lib/poker/poker';
 

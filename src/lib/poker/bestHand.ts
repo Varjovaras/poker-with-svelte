@@ -1,12 +1,16 @@
 import type { HandValue } from './handCalculator';
 
-const bestHand = (hands: HandValue[]): HandValue[] => {
+export const bestHand = (hands: HandValue[]): HandValue[] => {
 	const maxHandValue = Math.max(...hands.map(handValueToInt));
 	const filteredHands = hands.filter((hand) => handValueToInt(hand) === maxHandValue);
-	if (filteredHands.length === 0) {
+	if (filteredHands.length === 1) {
 		return filteredHands;
 	}
-	return hands.filter((hand) => handValueToInt(hand) === maxHandValue);
+	return compareSameHands(filteredHands);
+};
+
+const compareSameHands = (filteredHands: HandValue[]): HandValue[] => {
+	return filteredHands;
 };
 
 const handValueToInt = (handValue: HandValue): number => {

@@ -1,5 +1,4 @@
-import type { Card } from './card';
-
+import type { CardType } from './card';
 const HandTypes = [
 	'royal flush',
 	'straight flush',
@@ -20,7 +19,7 @@ const handRanksArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 type HandRankArray = typeof handRanksArray;
 type SuitCounts = Record<string, number>;
 
-export const handCalculator = (hand: Card[]): HandValue => {
+export const handCalculator = (hand: CardType[]): HandValue => {
 	if (hand.length < 5) {
 		throw new Error('Hand size smaller than 5 is not possible to calculate');
 	}
@@ -92,7 +91,7 @@ const isFlush = (suitCounts: SuitCounts): boolean => {
 //this is only called when your hand has flush and straight at the same time.
 //this checks if it's a royal flush, straight flush or only a flush
 const straightFlushHelper = (
-	hand: Card[],
+	hand: CardType[],
 	handSuitsAsNumbers: SuitCounts
 ): FlushAndStraightHandTypes => {
 	const sortedHand = sortCardsByRank(hand);
@@ -113,7 +112,7 @@ const straightFlushHelper = (
 };
 
 const flushIsStraight = (
-	sortedHand: Card[],
+	sortedHand: CardType[],
 	straightStartingIndex: number,
 	flushSuit: string
 ): boolean => {
@@ -129,7 +128,7 @@ const flushIsStraight = (
 	return true;
 };
 
-const handRankHelper = (hand: Card[]): number[] => {
+const handRankHelper = (hand: CardType[]): number[] => {
 	const handRanksAsNumbers = [...handRanksArray];
 
 	for (const card of hand) {
@@ -144,7 +143,7 @@ const handRankHelper = (hand: Card[]): number[] => {
 	return handRanksAsNumbers;
 };
 
-const handSuitHelper = (hand: Card[]): Record<string, number> => {
+const handSuitHelper = (hand: CardType[]): Record<string, number> => {
 	const suitCounts: Record<string, number> = {
 		hearts: 0,
 		diamonds: 0,
@@ -188,7 +187,7 @@ function isPair(handRanksAsNumbers: number[]): boolean {
 }
 
 //creates new array
-const sortCardsByRank = (hand: Card[]): Card[] => {
+const sortCardsByRank = (hand: CardType[]): CardType[] => {
 	return [...hand].sort((a, b) => a.rank - b.rank);
 };
 

@@ -1,6 +1,6 @@
-import { type Card, suits, ranks } from './card';
+import { type CardType, suits, ranks } from './card';
 
-export type Deck = Card[];
+export type Deck = CardType[];
 
 export const newDeck = (): Deck => {
 	const deck: Deck = [];

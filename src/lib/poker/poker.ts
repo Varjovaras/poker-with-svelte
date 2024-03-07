@@ -1,10 +1,10 @@
-import type { Card } from './card';
+import type { CardType } from './card';
 import { newDeck, type Deck } from './deck';
 import type { HandValue } from './handCalculator';
 
 export type Player = {
 	// name: string;
-	cards: Card[];
+	cards: CardType[];
 	handValue: HandValue;
 	id: number;
 };

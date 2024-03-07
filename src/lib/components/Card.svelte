@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Card, RankType, SuitType } from '$lib/poker/card';
+	import type { CardType, RankType, SuitType } from '$lib/poker/card';
 
 	const cardRanks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'] as const;
 	const cardSuitCharacters = ['H', 'D', 'C', 'S'] as const;
@@ -7,7 +7,7 @@
 	type SingleCardRank = (typeof cardRanks)[number];
 	type SingleSuitCharacter = (typeof cardSuitCharacters)[number];
 
-	export let card: Card;
+	export let card: CardType;
 
 	const cardSuitConverter = (suit: SuitType): SingleSuitCharacter => {
 		switch (suit) {
