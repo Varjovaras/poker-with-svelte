@@ -1,4 +1,5 @@
-import { newDeck, type Card, type Deck } from './deck';
+import type { Card } from './card';
+import { newDeck, type Deck } from './deck';
 import type { HandValue } from './handCalculator';
 
 export type Player = {

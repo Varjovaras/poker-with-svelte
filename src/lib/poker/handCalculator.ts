@@ -1,4 +1,4 @@
-import { newDeck, type Card, type Deck } from './deck';
+import type { Card } from './card';
 
 const HandTypes = [
 	'royal flush',
