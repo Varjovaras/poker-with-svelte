@@ -28,9 +28,12 @@
 	console.log(`../assets/cards/${cardRankConverter(card.rank)}_of_${card.suit}.svg`);
 </script>
 
-<img
-	src={`../assets/cards/${cardRankConverter(card.rank)}_of_${card.suit}.svg`}
-	alt="An alt text"
-/>
+<div class="m-0.5">
+	<img
+		src={`../assets/cards/${cardRankConverter(card.rank)}_of_${card.suit}.svg`}
+		alt="An alt text"
+		width="70px"
+	/>
+</div>
 
 <!-- <p class=" mr-0.5">{cardRankConverter(card.rank)}</p> -->
