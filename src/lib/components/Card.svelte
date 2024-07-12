@@ -1,37 +1,36 @@
 <script lang="ts">
-	import type { CardType, RankType, SuitType } from '$lib/poker/card';
+	import type { CardType, RankType } from '$lib/poker/card';
 
-	const cardRanks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'] as const;
-	const cardSuitCharacters = ['H', 'D', 'C', 'S'] as const;
+	const cardRanks = [
+		'ace',
+		'2',
+		'3',
+		'4',
+		'5',
+		'6',
+		'7',
+		'8',
+		'9',
+		'10',
+		'jack',
+		'queen',
+		'king'
+	] as const;
 
 	type SingleCardRank = (typeof cardRanks)[number];
-	type SingleSuitCharacter = (typeof cardSuitCharacters)[number];
 
 	export let card: CardType;
-
-	const cardSuitConverter = (suit: SuitType): SingleSuitCharacter => {
-		switch (suit) {
-			case 'hearts':
-				return 'H';
-			case 'diamonds':
-				return 'D';
-			case 'clubs':
-				return 'C';
-			case 'spades':
-				return 'S';
-			default:
-				throw new Error(`Invalid suit: ${suit}`);
-		}
-	};
 
 	const cardRankConverter = (rank: RankType): SingleCardRank => {
 		return cardRanks[rank];
 	};
+
+	console.log(`../assets/cards/${cardRankConverter(card.rank)}_of_${card.suit}.svg`);
 </script>
 
-{#if card.suit === 'diamonds' || card.suit === 'hearts'}
-	<span class="text-red-500">{cardSuitConverter(card.suit)}</span>
-{:else}
-	<span class="text-gray-400">{cardSuitConverter(card.suit)}</span>
-{/if}
-<p class=" mr-0.5">{cardRankConverter(card.rank)}</p>
+<img
+	src={`../assets/cards/${cardRankConverter(card.rank)}_of_${card.suit}.svg`}
+	alt="An alt text"
+/>
+
+<!-- <p class=" mr-0.5">{cardRankConverter(card.rank)}</p> -->

@@ -6,7 +6,7 @@
 	import { deal } from '$lib/poker/poker';
 
 	export let data: PageData;
-	let poker = data.post.poker;
+	const poker = data.post.poker;
 
 	$: cardsOnTable = poker.deck.slice(0, 5);
 
