@@ -3,7 +3,7 @@ import type { PageLoad } from './$types';
 
 export const load: PageLoad = () => {
 	const poker = newPoker();
-	deal(poker);
+	// deal(poker);
 
 	return {
 		post: {
