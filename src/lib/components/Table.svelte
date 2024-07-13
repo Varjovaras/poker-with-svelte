@@ -8,11 +8,9 @@
 	export let players: Player[];
 </script>
 
-<div class="mt-4 grid grid-cols-5 items-center">
+<div class="m-4 flex justify-center">
 	{#each cardsOnTable as card}
-		<div class="mx-4 my-0.5 flex justify-between">
-			<Card {card} />
-		</div>
+		<Card {card} />
 	{/each}
 </div>
 

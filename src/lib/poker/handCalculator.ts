@@ -1,18 +1,18 @@
-import type { CardType } from './card';
+import type { CardType } from "./card";
 const HandTypes = [
-	'royal flush',
-	'straight flush',
-	'four of kind',
-	'full house',
-	'flush',
-	'straight',
-	'three of kind',
-	'two pair',
-	'pair',
-	'high card'
+	"royal flush",
+	"straight flush",
+	"four of kind",
+	"full house",
+	"flush",
+	"straight",
+	"three of kind",
+	"two pair",
+	"pair",
+	"high card",
 ] as const;
 export type HandValue = (typeof HandTypes)[number];
-type FlushAndStraightHandTypes = 'royal flush' | 'straight flush' | 'flush';
+type FlushAndStraightHandTypes = "royal flush" | "straight flush" | "flush";
 
 //there are 14 elements because Ace can be a 1 or 14 depending on the straight
 const handRanksArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -21,7 +21,7 @@ type SuitCounts = Record<string, number>;
 
 export const handCalculator = (hand: CardType[]): HandValue => {
 	if (hand.length < 5) {
-		throw new Error('Hand size smaller than 5 is not possible to calculate');
+		throw new Error("Hand size smaller than 5 is not possible to calculate");
 	}
 	const handRanksAsNumbers = handRankHelper(hand);
 	const handSuitsAsNumbers = handSuitHelper(hand);
@@ -31,34 +31,34 @@ export const handCalculator = (hand: CardType[]): HandValue => {
 	}
 
 	if (isFourOfKind(handRanksAsNumbers)) {
-		return 'four of kind';
+		return "four of kind";
 	}
 
 	if (isFullHouse(handRanksAsNumbers)) {
-		return 'full house';
+		return "full house";
 	}
 
 	if (isFlush(handSuitsAsNumbers)) {
-		return 'flush';
+		return "flush";
 	}
 
 	if (isStraight(handRanksAsNumbers)) {
-		return 'straight';
+		return "straight";
 	}
 
 	if (isThreeOfKind(handRanksAsNumbers)) {
-		return 'three of kind';
+		return "three of kind";
 	}
 
 	if (isTwoPair(handRanksAsNumbers)) {
-		return 'two pair';
+		return "two pair";
 	}
 
 	if (isPair(handRanksAsNumbers)) {
-		return 'pair';
+		return "pair";
 	}
 
-	return 'high card';
+	return "high card";
 };
 
 const isStraight = (handRanksAsNumbers: HandRankArray): boolean => {
@@ -92,7 +92,7 @@ const isFlush = (suitCounts: SuitCounts): boolean => {
 //this checks if it's a royal flush, straight flush or only a flush
 const straightFlushHelper = (
 	hand: CardType[],
-	handSuitsAsNumbers: SuitCounts
+	handSuitsAsNumbers: SuitCounts,
 ): FlushAndStraightHandTypes => {
 	const sortedHand = sortCardsByRank(hand);
 	const flushSuit = suitWithFiveOrMore(handSuitsAsNumbers);
@@ -102,21 +102,23 @@ const straightFlushHelper = (
 	for (let i = 0; i < 10; i++) {
 		if (flushIsStraight(sortedHand, i, flushSuit)) {
 			if (i === 9) {
-				return 'royal flush';
+				return "royal flush";
 			}
-			return 'straight flush';
+			return "straight flush";
 		}
 	}
 
-	return 'flush';
+	return "flush";
 };
 
 const flushIsStraight = (
 	sortedHand: CardType[],
 	straightStartingIndex: number,
-	flushSuit: string
+	flushSuit: string,
 ): boolean => {
-	const straightFlushCards = sortedHand.filter((card) => card.suit === flushSuit);
+	const straightFlushCards = sortedHand.filter(
+		(card) => card.suit === flushSuit,
+	);
 
 	for (let i = 0; i < 5; i++) {
 		const expectedRank = (straightStartingIndex + i) % 13;
@@ -148,7 +150,7 @@ const handSuitHelper = (hand: CardType[]): Record<string, number> => {
 		hearts: 0,
 		diamonds: 0,
 		clubs: 0,
-		spades: 0
+		spades: 0,
 	};
 
 	for (const card of hand) {
@@ -199,6 +201,6 @@ const suitWithFiveOrMore = (handSuitsAsNumbers: SuitCounts): string => {
 		}
 	}
 	throw new Error(
-		"This shouldn't be called because hand should always be flush, when checking for straight flush"
+		"This shouldn't be called because hand should always be flush, when checking for straight flush",
 	);
 };
