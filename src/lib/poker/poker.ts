@@ -1,10 +1,10 @@
-import type { CardType } from './card';
-import { newDeck, type Deck } from './deck';
-import type { HandValue } from './handCalculator';
+import type { Card } from "./card";
+import { newDeck, type Deck } from "./deck";
+import type { HandValue } from "./handCalculator";
 
 export type Player = {
 	// name: string;
-	cards: CardType[];
+	cards: Card[];
 	handValue: HandValue;
 	id: number;
 };
@@ -17,8 +17,8 @@ export type Poker = {
 export const newPlayer = (id: number): Player => {
 	return {
 		cards: [],
-		handValue: 'high card',
-		id: id
+		handValue: "high card",
+		id: id,
 	};
 };
 
@@ -27,7 +27,7 @@ export const newPoker = (): Poker => {
 
 	return {
 		players,
-		deck: newDeck()
+		deck: newDeck(),
 	};
 };
 
@@ -38,7 +38,7 @@ export const deal = (poker: Poker) => {
 			if (dealtCard) {
 				player.cards.push(dealtCard);
 			} else {
-				console.error('No more cards in the deck');
+				console.error("No more cards in the deck");
 				return;
 			}
 		}

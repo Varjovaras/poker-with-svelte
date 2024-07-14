@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { CardType } from '$lib/poker/card';
 	import Card from '$lib/components/Card.svelte';
 	import type { Player } from '$lib/poker/poker';
 	import { handCalculator } from '$lib/poker/handCalculator';
+	import type { Card as CardType } from '$lib/poker/card';
 
 	export let cardsOnTable: CardType[];
 	export let players: Player[];
