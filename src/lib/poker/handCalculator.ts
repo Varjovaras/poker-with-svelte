@@ -13,6 +13,9 @@ const HandTypes = [
 ] as const;
 export type HandValue = (typeof HandTypes)[number];
 
+//hand might be a flush and straight, while not being a straight flush
+//but also four of kind or full house which are bigger value hands than normal flush
+//only time four of kind or full house can happen are on bigger than 7 card hands
 type FlushAndStraightHandTypes =
 	| 'royal flush'
 	| 'straight flush'
