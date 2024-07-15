@@ -8,12 +8,13 @@
 	export let players: Player[];
 </script>
 
-<div class="m-4 flex justify-center">
-	{#each cardsOnTable as card}
-		<Card {card} />
-	{/each}
+<div class="m-4">
+	<div class="m-4 flex justify-center">
+		{#each cardsOnTable as card}
+			<Card {card} />
+		{/each}
+	</div>
 </div>
-
 <div class="mx-6 grid grid-cols-2">
 	{#each players as player (player.id)}
 		<div class="mx-4 my-0.5 flex justify-between">
@@ -25,6 +26,8 @@
 			<p>
 				{handCalculator(cardsOnTable.concat(player.cards))}
 			</p>
+		{:else}
+			<p></p>
 		{/if}
 	{/each}
 </div>

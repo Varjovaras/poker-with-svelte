@@ -39,6 +39,7 @@
 
 <div class="flex min-h-screen flex-col items-center justify-center">
 	<h1 class="h1">Welcome to <span class="text-red-500">Poker Simulator</span></h1>
+
 	<Table {cardsOnTable} players={poker.players} />
 	<div class="flex">
 		<!-- <ShuffleButton {shuffle} /> -->

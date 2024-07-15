@@ -98,13 +98,14 @@ const straightFlushHelper = (
 	const sortedHand = sortCardsByRank(hand);
 	const flushSuit = suitWithFiveOrMore(handSuitsAsNumbers);
 
+	if (flushIsStraight(sortedHand, 9, flushSuit)) {
+		return 'royal flush';
+	}
+
 	// Check for straight flush starting from any possible index
 	//straight might start from a different index than the containing straight flush so check all to make sure
-	for (let i = 0; i < 10; i++) {
+	for (let i = 0; i < 9; i++) {
 		if (flushIsStraight(sortedHand, i, flushSuit)) {
-			if (i === 9) {
-				return 'royal flush';
-			}
 			return 'straight flush';
 		}
 	}
