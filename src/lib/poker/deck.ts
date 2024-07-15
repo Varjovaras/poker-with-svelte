@@ -1,4 +1,4 @@
-import { type Card, suits, ranks } from "./card";
+import { type Card, suits, ranks } from './card';
 
 export type Deck = Card[];
 
@@ -8,19 +8,19 @@ export const newDeck = (): Deck => {
 		for (let j = 0; j < 13; j++) {
 			const card = {
 				suit: suits[i],
-				rank: ranks[j],
+				rank: ranks[j]
 			};
 			deck.push(card);
 		}
 	}
 	if (deck.length !== 52) {
-		throw new Error("deck is not 52 cards");
+		throw new Error('deck is not 52 cards');
 	}
 
 	return shuffleDeck(deck);
 };
 
-const shuffleDeck = (deck: Deck): Deck => {
+export const shuffleDeck = (deck: Deck): Deck => {
 	const newDeck = [...deck];
 	for (let i = newDeck.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));

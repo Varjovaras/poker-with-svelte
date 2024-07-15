@@ -1,4 +1,4 @@
-import { deal, newPoker } from '$lib/poker/poker';
+import { newPoker } from '$lib/poker/poker';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = () => {
