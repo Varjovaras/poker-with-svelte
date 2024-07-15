@@ -1,4 +1,4 @@
-import type { Card } from "./card";
+import type { Card, Rank } from "./card";
 const HandTypes = [
 	"royal flush",
 	"straight flush",
@@ -12,11 +12,14 @@ const HandTypes = [
 	"high card",
 ] as const;
 export type HandValue = (typeof HandTypes)[number];
+export type HandRankArray = Array<Rank> & { length: 14 };
+
 type FlushAndStraightHandTypes = "royal flush" | "straight flush" | "flush";
 
 //there are 14 elements because Ace can be a 1 or 14 depending on the straight
-const handRanksArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-type HandRankArray = typeof handRanksArray;
+const defaultHandRanksArray: HandRankArray = [
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+];
 type SuitCounts = Record<string, number>;
 
 export const handCalculator = (hand: Card[]): HandValue => {
@@ -130,8 +133,10 @@ const flushIsStraight = (
 	return true;
 };
 
-const handRankHelper = (hand: Card[]): number[] => {
-	const handRanksAsNumbers = [...handRanksArray];
+const handRankHelper = (hand: Card[]): HandRankArray => {
+	const handRanksAsNumbers: HandRankArray = Array.from(
+		defaultHandRanksArray,
+	) as HandRankArray;
 
 	for (const card of hand) {
 		//ace which has rank of 0 is also added to the 14th element of the array
@@ -142,6 +147,7 @@ const handRankHelper = (hand: Card[]): number[] => {
 			handRanksAsNumbers[card.rank]++;
 		}
 	}
+
 	return handRanksAsNumbers;
 };
 
@@ -168,11 +174,11 @@ const isFullHouse = (handRanksAsNumbers: HandRankArray): boolean => {
 	return isThreeOfKind(handRanksAsNumbers) && isPair(handRanksAsNumbers);
 };
 
-function isThreeOfKind(handRanksAsNumbers: number[]): boolean {
+const isThreeOfKind = (handRanksAsNumbers: HandRankArray): boolean => {
 	return handRanksAsNumbers.some((count) => count === 3);
-}
+};
 
-const isTwoPair = (handRanksAsNumbers: number[]): boolean => {
+const isTwoPair = (handRanksAsNumbers: HandRankArray): boolean => {
 	let pairCount = 0;
 
 	for (const rank of handRanksAsNumbers) {
@@ -184,9 +190,9 @@ const isTwoPair = (handRanksAsNumbers: number[]): boolean => {
 	return pairCount >= 2;
 };
 
-function isPair(handRanksAsNumbers: number[]): boolean {
+const isPair = (handRanksAsNumbers: HandRankArray): boolean => {
 	return handRanksAsNumbers.some((count) => count === 2);
-}
+};
 
 //creates new array
 const sortCardsByRank = (hand: Card[]): Card[] => {
