@@ -13,7 +13,12 @@ const HandTypes = [
 ] as const;
 export type HandValue = (typeof HandTypes)[number];
 
-type FlushAndStraightHandTypes = 'royal flush' | 'straight flush' | 'flush';
+type FlushAndStraightHandTypes =
+	| 'royal flush'
+	| 'straight flush'
+	| 'flush'
+	| 'four of kind'
+	| 'full house';
 
 //there are 14 elements because Ace can be a 1 or 14 depending on the straight
 export type HandRankArray = Array<Rank> & { length: 14 };
@@ -28,7 +33,7 @@ export const handCalculator = (hand: Card[]): HandValue => {
 	const handSuitsAsNumbers = handSuitHelper(hand);
 
 	if (isFlush(handSuitsAsNumbers) && isStraight(handRanksAsNumbers)) {
-		return straightFlushHelper(hand, handSuitsAsNumbers);
+		return isStraightFlush(hand, handSuitsAsNumbers);
 	}
 
 	if (isFourOfKind(handRanksAsNumbers)) {
@@ -91,7 +96,8 @@ const isFlush = (suitCounts: SuitCounts): boolean => {
 
 //this is only called when your hand has flush and straight at the same time.
 //this checks if it's a royal flush, straight flush or only a flush
-const straightFlushHelper = (
+//if the hand contains a flush, check if its a full house or four of kind
+const isStraightFlush = (
 	hand: Card[],
 	handSuitsAsNumbers: SuitCounts
 ): FlushAndStraightHandTypes => {
@@ -110,6 +116,9 @@ const straightFlushHelper = (
 		}
 	}
 
+	const handRanksAsNumbers = handRankHelper(hand);
+	if (isFourOfKind(handRanksAsNumbers)) return 'four of kind';
+	if (isFullHouse(handRanksAsNumbers)) return 'full house';
 	return 'flush';
 };
 
