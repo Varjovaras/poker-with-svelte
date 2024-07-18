@@ -1,5 +1,5 @@
-import { newPoker } from '$lib/poker/poker';
-import type { PageLoad } from './$types';
+import { newPoker } from "$lib/poker/poker";
+import type { PageLoad } from "./$types";
 
 export const load: PageLoad = () => {
 	const poker = newPoker();
@@ -7,7 +7,7 @@ export const load: PageLoad = () => {
 
 	return {
 		post: {
-			poker
-		}
+			poker,
+		},
 	};
 };
